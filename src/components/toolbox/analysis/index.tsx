@@ -7,6 +7,7 @@ import IntermediateCheckbox from '../../IntermediateCheckbox';
 import { VisibilityOptions } from '../../../helpers/enums';
 import ColoringMode from './ColoringMode';
 import NodeSizingMode from './NodeSizingMode';
+import DirectViolations from './DirectViolations';
 
 export default function ToolboxAnalysis() {
   const { visibility, setVisibility } = useContext(ViolationsContext);
@@ -36,7 +37,10 @@ export default function ToolboxAnalysis() {
           id="non-violations-visibility-checkbox"
         />
       </Form>
+      <DirectViolations />
+      <br />
       <CyclicalDependencies />
+      <br />
       <SubLayerViolations />
     </div>
   );

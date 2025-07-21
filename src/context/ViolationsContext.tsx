@@ -7,6 +7,7 @@ import { VisibilityOptions } from '../helpers/enums';
 export interface ViolationVisibility {
   dependencyCycles: VisibilityOptions;
   subLayers: VisibilityOptions;
+  directViolations: VisibilityOptions;
   nonViolations: VisibilityOptions;
 }
 
@@ -21,6 +22,7 @@ interface IViolationsContext {
 const defaultViolationVisibility: ViolationVisibility = ({
   dependencyCycles: VisibilityOptions.HIGHLIGHTED,
   subLayers: VisibilityOptions.HIGHLIGHTED,
+  directViolations: VisibilityOptions.HIGHLIGHTED,
   nonViolations: VisibilityOptions.VISIBLE,
 });
 
@@ -28,6 +30,7 @@ export const ViolationsContext = createContext<IViolationsContext>({
   violations: {
     dependencyCycles: [],
     subLayers: [],
+    directViolations: [],
   },
   setViolations: () => {},
   visibility: defaultViolationVisibility,
@@ -39,6 +42,7 @@ export default function ViolationsContextProvider({ children }: PropsWithChildre
   const [violations, setViolations] = useState<Violations>({
     dependencyCycles: [],
     subLayers: [],
+    directViolations: [],
   });
   const [visibility, setVisibility] = useState<ViolationVisibility>(defaultViolationVisibility);
 

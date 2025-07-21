@@ -14,9 +14,10 @@ export default function useGraphViolations(
     const violationIds = {
       dependencyCycles: violations.dependencyCycles.map((c) => c.path.map((p) => p.id)).flat(),
       subLayers: violations.subLayers.map((s) => s.id),
+      directViolations: violations.directViolations.map((d) => d.id),
     };
 
-    const allIds = [...violationIds.dependencyCycles, ...violationIds.subLayers];
+    const allIds = [...violationIds.dependencyCycles, ...violationIds.subLayers, ...violationIds.directViolations];
     const highlightIds: string[] = [];
     const visibleIds: string[] = [];
     if (visibility.dependencyCycles === VisibilityOptions.HIGHLIGHTED) {
@@ -29,21 +30,21 @@ export default function useGraphViolations(
     } else if (visibility.subLayers === VisibilityOptions.VISIBLE) {
       visibleIds.push(...violationIds.subLayers);
     }
+    if (visibility.directViolations === VisibilityOptions.HIGHLIGHTED) {
+      highlightIds.push(...violationIds.directViolations);
+    } else if (visibility.directViolations === VisibilityOptions.VISIBLE) {
+      visibleIds.push(...violationIds.directViolations);
+    }
 
     cy.current.edges().forEach((e: cytoscape.EdgeSingular) => {
       e.removeClass('violation');
       e.removeClass('hidden');
-      e.removeClass('deviation');
 
       const idWithRandom = e.id();
       const id = idWithRandom.split('--')[0] || '';
-      const edgeLabel = e.data('interaction');
 
-      if (highlightIds.includes(id) || edgeLabel === 'deviates') {
-        e.addClass('deviation');
-      }
       // Edge should be highlighted
-      if (highlightIds.includes(id) || edgeLabel === 'violates') {
+      if (highlightIds.includes(id)) {
         e.addClass('violation');
         // Edge is a violation and should not be made visible
       } else if (allIds.includes(id) && !visibleIds.includes(id)) {

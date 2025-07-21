@@ -8,6 +8,8 @@ import {
   useEncapsulationMetrics,
   useDependencyProfileMetrics,
   useCohesionMetrics,
+  useInterfaceProfileMetrics,
+  useDeploymentProfileMetrics,
 } from '../hooks/metrics';
 import { ICategoryMetric, IMetricSettings } from '../helpers/metrics';
 import { DEFAULT_NODE_COLOR } from '../helpers/color';
@@ -52,6 +54,8 @@ export default function ColoringContextProvider({ children }: Props) {
   const { coloring: dependencyProfileColoring } = useDependencyProfileMetrics();
   const { colorings: encapsulationColorings } = useEncapsulationMetrics();
   const { coloring: cohesionColoring } = useCohesionMetrics();
+  const { coloring: interfaceProfileColorings } = useInterfaceProfileMetrics();
+  const { coloring: deploymentProfileColorings } = useDeploymentProfileMetrics();
 
   const structureColoring: ICategoryMetric = useMemo(() => ({
     ...initStructureColoring,
@@ -73,9 +77,11 @@ export default function ColoringContextProvider({ children }: Props) {
     dependencyProfileColoring,
     ...encapsulationColorings,
     cohesionColoring,
+    interfaceProfileColorings,
+    deploymentProfileColorings,
   ].filter((c) => c.colorFunction !== undefined)), [
     dependencyProfileColoring, encapsulationColorings, simpleLeafColorings,
-    structureColoring, cohesionColoring,
+    structureColoring, cohesionColoring, interfaceProfileColorings, deploymentProfileColorings
   ]);
 
   const coloringContext = useMemo((): IColoringContext => {

@@ -52,6 +52,10 @@ export type Domain = {
          */
         dependencyProfileCategory?: ModuleDependencyProfileCategory;
         /**
+         * A JSON string containing custom node properties to be used for extensions
+         */
+        nodeProperties?: string;
+        /**
          * Whether this node is selected or not
          */
         selected: 'true' | 'false';
@@ -126,6 +130,10 @@ export type NodeData = {
          */
         dependencyProfileCategory?: ModuleDependencyProfileCategory;
         /**
+         * A JSON string containing custom node properties to be used for extensions
+         */
+        nodeProperties?: string;
+        /**
          * Whether this node is selected or not
          */
         selected: 'true' | 'false';
@@ -151,6 +159,7 @@ export type Node = {
 export type EdgeViolations = {
     subLayer: boolean;
     dependencyCycle: boolean;
+    directViolation: boolean;
 };
 
 export type EdgeReferences = {
@@ -309,6 +318,7 @@ export type LayerViolation = {
 export type Violations = {
     dependencyCycles: Array<DependencyCycleRender>;
     subLayers: Array<LayerViolation>;
+    directViolations: Array<ExtendedSimpleEdgeData>;
 };
 
 export type GraphWithViolations = {
