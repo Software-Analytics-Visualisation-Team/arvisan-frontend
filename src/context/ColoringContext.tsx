@@ -52,8 +52,6 @@ export default function ColoringContextProvider({ children }: Props) {
   const { coloring: dependencyProfileColoring } = useDependencyProfileMetrics();
   const { colorings: encapsulationColorings } = useEncapsulationMetrics();
   const { coloring: cohesionColoring } = useCohesionMetrics();
-  const { coloring: interfaceProfileColorings } = useInterfaceProfileMetrics();
-  const { coloring: deploymentProfileColorings } = useDeploymentProfileMetrics();
 
   const structureColoring: ICategoryMetric = useMemo(() => ({
     ...initStructureColoring,
@@ -75,11 +73,9 @@ export default function ColoringContextProvider({ children }: Props) {
     dependencyProfileColoring,
     ...encapsulationColorings,
     cohesionColoring,
-    interfaceProfileColorings,
-    deploymentProfileColorings,
   ].filter((c) => c.colorFunction !== undefined)), [
     dependencyProfileColoring, encapsulationColorings, simpleLeafColorings,
-    structureColoring, cohesionColoring, interfaceProfileColorings, deploymentProfileColorings
+    structureColoring, cohesionColoring
   ]);
 
   const coloringContext = useMemo((): IColoringContext => {
