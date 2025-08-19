@@ -8,8 +8,6 @@ import {
   useEncapsulationMetrics,
   useDependencyProfileMetrics,
   useCohesionMetrics,
-  useInterfaceProfileMetrics,
-  useDeploymentProfileMetrics,
 } from '../hooks/metrics';
 import { ICategoryMetric, IMetricSettings } from '../helpers/metrics';
 import { DEFAULT_NODE_COLOR } from '../helpers/color';
